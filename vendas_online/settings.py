@@ -28,8 +28,7 @@ SECRET_KEY = 'django-insecure-smr*w02tav^j5kr)&n6rdq!)8ix(4^1)cbhh62ryvrh=90_(t5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['vendas-online.onrender.com', 'localhost', '127.0.0.1']
 
 # Application definition
 
