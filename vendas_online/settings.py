@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'vendas_online.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://usuario:senha@host:porta/nome_do_banco')
+    'default': dj_database_url.config(default='postgresql://vendas_online_qts_user:LKGZmNCyHrrHFzzVh5nCn9JHuO3cHzTL@dpg-d2659vm3jp1c73cimnng-a/vendas_online_qts')
 }
 
 
