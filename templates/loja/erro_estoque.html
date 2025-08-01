@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Produtos Disponíveis</h2>
+  <div class="row">
+    {% for p in produtos %}
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ p.nome }}</h5>
+          <p class="card-text">Preço: R$ {{ p.preco }}</p>
+          <p class="card-text">Estoque: {{ p.estoque }}</p>
+
+          <form method="post" action="{% url 'loja:adicionar' p.id %}">
+            {% csrf_token %}
+            <div class="input-group">
+              <input type="number" name="quantidade" value="1" min="1" max="{{ p.estoque }}" class="form-control" required>
+              <button type="submit" class="btn btn-success">Adicionar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

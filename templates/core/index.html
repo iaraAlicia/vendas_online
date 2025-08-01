@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Bem-vindo à Loja Virtual!</h2>
+  <p>Faça login ou cadastre-se para acessar os recursos.</p>
+  <a href="{% url 'login' %}" class="btn btn-primary">Entrar</a>
+  <a href="{% url 'clientes:cadastro' %}" class="btn btn-outline-success">Cadastrar</a>
+</div>
+{% endblock %}

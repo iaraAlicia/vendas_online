@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid mt-4">
+    <h2 class="mb-4 fw-bold">Dashboard</h2>
+
+    <!-- Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card border-start border-primary border-5 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">TOTAL DE CLIENTES</h6>
+                    <h4>{{ total_clientes }}</h4>
+                    <i class="fas fa-users fa-lg text-primary float-end"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-start border-success border-5 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">TOTAL DE PRODUTOS</h6>
+                    <h4>{{ total_produtos }}</h4>
+                    <i class="fas fa-boxes fa-lg text-success float-end"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-start border-info border-5 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">TOTAL DE VENDAS</h6>
+                    <h4>{{ total_vendas }}</h4>
+                    <i class="fas fa-shopping-cart fa-lg text-info float-end"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-start border-warning border-5 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">VALOR TOTAL FATURADO</h6>
+                    <h4>R$ {{ total_faturado|floatformat:2 }}</h4>
+                    <i class="fas fa-dollar-sign fa-lg text-warning float-end"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gráficos -->
+    <div class="row g-4">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title fw-bold mb-3">Faturamento por Mês</h6>
+                    <canvas id="graficoVendas"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title fw-bold mb-3">Distribuição por Produto</h6>
+                    <canvas id="graficoProdutos"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctxVendas = document.getElementById('graficoVendas').getContext('2d');
+    const ctxProdutos = document.getElementById('graficoProdutos').getContext('2d');
+
+    const graficoVendas = new Chart(ctxVendas, {
+        type: 'line',
+        data: {
+            labels: {{ meses|safe }},
+            datasets: [{
+                label: 'Faturamento',
+                data: {{ valores|safe }},
+                borderColor: '#0d6efd',
+                backgroundColor: 'rgba(13, 110, 253, 0.2)',
+                tension: 0.4
+            }]
+        }
+    });
+
+    const graficoProdutos = new Chart(ctxProdutos, {
+        type: 'doughnut',
+        data: {
+            labels: {{ nomes_produtos|safe }},
+            datasets: [{
+                label: 'Produtos',
+                data: {{ quantidades_produtos|safe }},
+                backgroundColor: ['#0d6efd', '#198754', '#ffc107', '#dc3545']
+            }]
+        }
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Nova Venda</h2>
+    {% if messages %}
+    {% for msg in messages %}
+        <div class="alert alert-warning">{{ msg }}</div>
+    {% endfor %}
+    {% endif %}
+    <form method="post" id="form-venda">
+        {% csrf_token %}
+        <label>Cliente:</label>
+        <select name="cliente" class="form-select mb-3">
+            {% for cliente in clientes %}
+            <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
+            {% endfor %}
+        </select>
+
+        <h4>Produtos:</h4>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <select id="produto" class="form-select">
+                    <option value="">Selecione</option>
+                    {% for p in produtos %}
+                    <option value="{{ p.id }}" data-nome="{{ p.nome }}" data-preco="{{ p.preco }}" data-estoque="{{ p.estoque }}">{{ p.nome }} - R$ {{ p.preco }} ({{ p.estoque }} un)</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <input type="number" id="quantidade" class="form-control" placeholder="Quantidade" min="1" value="1">
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-primary w-100" onclick="adicionarProduto()">Adicionar</button>
+            </div>
+        </div>
+
+        <table class="table" id="tabela-produtos">
+            <thead><tr><th>Produto</th><th>Qtd</th><th>Subtotal</th><th></th></tr></thead>
+            <tbody></tbody>
+        </table>
+
+        <input type="hidden" name="itens" id="input-itens">
+        <button type="submit" class="btn btn-success mt-3">Finalizar Venda</button>
+    </form>
+</div>
+
+<script>
+    let produtos = [];
+
+    function adicionarProduto() {
+        const select = document.getElementById('produto');
+        const qtd = parseInt(document.getElementById('quantidade').value);
+        const option = select.selectedOptions[0];
+        if (!option.value || qtd < 1) return alert('Selecione um produto e quantidade válida.');
+
+        const nome = option.dataset.nome;
+        const preco = parseFloat(option.dataset.preco);
+        const estoque = parseInt(option.dataset.estoque);
+
+        if (qtd > estoque) return alert('Estoque insuficiente!');
+
+        produtos.push({ id: option.value, nome, quantidade: qtd, subtotal: qtd * preco });
+        atualizarTabela();
+    }
+
+    function atualizarTabela() {
+        const tbody = document.querySelector('#tabela-produtos tbody');
+        tbody.innerHTML = '';
+        produtos.forEach((p, i) => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${p.nome}</td>
+                    <td>${p.quantidade}</td>
+                    <td>R$ ${p.subtotal.toFixed(2)}</td>
+                    <td><button type="button" class="btn btn-sm btn-danger" onclick="removerProduto(${i})">Remover</button></td>
+                </tr>`;
+        });
+        document.getElementById('input-itens').value = JSON.stringify(produtos);
+    }
+
+    function removerProduto(i) {
+        produtos.splice(i, 1);
+        atualizarTabela();
+    }
+</script>
+{% endblock %}

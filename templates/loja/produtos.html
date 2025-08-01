@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4">🛍️ Produtos Disponíveis</h2>
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for p in produtos %}
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0">
+        <img src="https://via.placeholder.com/400x250.png?text=Produto+{{ p.id }}" class="card-img-top" alt="{{ p.nome }}">
+        <div class="card-body">
+          <h5 class="card-title text-primary fw-bold">{{ p.nome }}</h5>
+          <p class="card-text">💵 <strong>Preço:</strong> R$ {{ p.preco }}</p>
+          <p class="card-text">📦 <strong>Estoque:</strong> {{ p.estoque }}</p>
+
+          <form method="post" action="{% url 'loja:adicionar' p.id %}">
+            {% csrf_token %}
+            <div class="input-group">
+              <input type="number" name="quantidade" value="1" min="1" max="{{ p.estoque }}" class="form-control" required>
+              <button type="submit" class="btn btn-success">Adicionar ao Carrinho</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-center">Nenhum produto disponível no momento.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>{% if produto %}Editar{% else %}Novo{% endif %} Produto</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label>Nome:</label>
+            <input type="text" name="nome" class="form-control" value="{{ produto.nome|default:'' }}" required>
+        </div>
+        <div class="mb-3">
+            <label>Descrição:</label>
+            <textarea name="descricao" class="form-control">{{ produto.descricao|default:'' }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label>Preço:</label>
+            <input type="number" name="preco" step="0.01" class="form-control" value="{{ produto.preco|default:'' }}" required>
+        </div>
+        <div class="mb-3">
+            <label>Estoque:</label>
+            <input type="number" name="estoque" class="form-control" value="{{ produto.estoque|default:'' }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a href="{% url 'produtos:lista' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h3>Cadastro de Cliente</h3>
+  <form method="post">
+    {% csrf_token %}
+    {{ form_user.as_p }}
+    {{ form_cliente.as_p }}
+    <button class="btn btn-primary" type="submit">Cadastrar</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Histórico de Vendas</h2>
+    {% if vendas %}
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Data</th>
+                <th>Total</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for venda in vendas %}
+            <tr>
+                <td>{{ venda.id }}</td>
+                <td>{{ venda.cliente.nome }}</td>
+                <td>{{ venda.data|date:"d/m/Y H:i" }}</td>
+                <td>R$ {{ venda.total|floatformat:2 }}</td>
+                <td>
+                    <a href="{% url 'vendas:comprovante' venda.id %}" class="btn btn-sm btn-info">Ver Comprovante</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Nenhuma venda registrada ainda.</p>
+    {% endif %}
+</div>
+{% endblock %}

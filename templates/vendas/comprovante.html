@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Comprovante de Venda</h2>
+    <p><strong>Cliente:</strong> {{ venda.cliente.nome }}</p>
+    <p><strong>Data:</strong> {{ venda.data }}</p>
+    <table class="table">
+        <thead><tr><th>Produto</th><th>Qtd</th><th>Subtotal</th></tr></thead>
+        <tbody>
+            {% for item in venda.itens.all %}
+            <tr>
+                <td>{{ item.produto.nome }}</td>
+                <td>{{ item.quantidade }}</td>
+                <td>R$ {{ item.subtotal|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+            <tr><td colspan="2"><strong>Total</strong></td><td><strong>R$ {{ venda.total|floatformat:2 }}</strong></td></tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

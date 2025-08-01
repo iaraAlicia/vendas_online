@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Olá, {{ cliente.user.first_name }}!</h2>
+  <p>Bem-vinda à sua conta. Aqui estão seus pedidos recentes:</p>
+
+  <a href="{% url 'loja:produtos' %}" class="btn btn-primary">Ver Produtos</a>
+  <a href="{% url 'loja:carrinho' %}" class="btn btn-outline-success">Meu Carrinho</a>
+
+  <hr>
+  <h4>Histórico de Compras</h4>
+  {% if vendas %}
+    <ul class="list-group">
+      {% for venda in vendas %}
+        <li class="list-group-item">
+          {{ venda.data|date:"d/m/Y H:i" }} — Total: R$ {{ venda.total|floatformat:2 }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Você ainda não realizou compras.</p>
+  {% endif %}
+</div>
+{% endblock %}
