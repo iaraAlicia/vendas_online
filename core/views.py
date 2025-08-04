@@ -16,14 +16,14 @@ def index_publico(request):
         if request.user.is_staff:
             return redirect('dashboard')  # ou para onde estiver seu dashboard
         else:
-            return redirect('loja:area_cliente')
+            return redirect('loja:produtos')
     return render(request, 'core/index.html')
 
 def redirecionar_usuario(request):
     if request.user.is_staff:
         return redirect('dashboard')
     else:
-        return redirect('loja:area_cliente')
+        return redirect('loja:produtos')
 
 
 @staff_member_required

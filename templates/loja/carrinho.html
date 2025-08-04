@@ -1,23 +1,42 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container mt-5">
-  <h2 class="text-center mb-4">🛒 Seu Carrinho</h2>
+<div class="container py-5">
+  <h2 class="text-center mb-5 text-primary fw-bold">🛒 Seu Carrinho</h2>
+
+  <!-- Botão voltar -->
+  <div class="mb-4">
+    <a href="{% url 'loja:produtos' %}" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left-circle"></i> Voltar para os produtos
+    </a>
+  </div>
 
   {% if itens %}
   <div class="row row-cols-1 row-cols-md-2 g-4">
     {% for item in itens %}
     <div class="col">
-      <div class="card h-100 shadow-sm border-0">
+      <div class="card h-100 shadow rounded-4 border-0">
         <div class="row g-0">
-          <div class="col-md-4">
-            <img src="https://via.placeholder.com/300x200.png?text={{ item.produto.nome|urlencode }}" class="img-fluid rounded-start" alt="{{ item.produto.nome }}">
+          <div class="col-md-5">
+            {% if item.produto.imagem %}
+            <img src="{{ item.produto.imagem.url }}" alt="{{ item.produto.nome }}" class="img-fluid rounded-start" style="object-fit: cover; height: 180px; width: 100%;">
+            {% else %}
+            <img src="https://via.placeholder.com/300x200.png?text=Sem+Imagem" alt="Sem imagem" class="img-fluid rounded-start" style="object-fit: cover; height: 180px; width: 100%;">
+            {% endif %}
           </div>
-          <div class="col-md-8">
+          <div class="col-md-7 d-flex flex-column">
             <div class="card-body">
-              <h5 class="card-title">{{ item.produto.nome }}</h5>
-              <p class="card-text mb-1"><strong>Preço:</strong> R$ {{ item.produto.preco }}</p>
-              <p class="card-text mb-1"><strong>Quantidade:</strong> {{ item.quantidade }}</p>
-              <p class="card-text"><strong>Subtotal:</strong> R$ {{ item.subtotal }}</p>
+              <h5 class="card-title fw-bold">{{ item.produto.nome }}</h5>
+              <p class="card-text mb-2"><strong>Preço:</strong> R$ {{ item.produto.preco }}</p>
+              <p class="card-text mb-2"><strong>Quantidade:</strong> {{ item.quantidade }}</p>
+              <p class="card-text mb-0"><strong>Subtotal:</strong> R$ {{ item.subtotal }}</p>
+            </div>
+            <div class="mt-auto px-3 pb-3">
+              <form method="post" action="{% url 'loja:remover' item.produto.id %}" class="mt-3 remover-form">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm w-100">
+                  <i class="bi bi-trash3"></i> Remover
+                </button>
+              </form>
             </div>
           </div>
         </div>
@@ -26,15 +45,36 @@
     {% endfor %}
   </div>
 
-  <div class="mt-4 text-end">
-    <h4><strong>Total:</strong> R$ {{ total }}</h4>
-    <a href="{% url 'loja:finalizar' %}" class="btn btn-primary btn-lg mt-2">Finalizar Compra</a>
+  <div class="mt-5 text-end">
+    <h4 class="fw-bold">Total: R$ {{ total }}</h4>
+    <a href="{% url 'loja:finalizar' %}" id="finalizar-btn" class="btn btn-lg btn-primary mt-3 px-5">
+      Finalizar Compra <i class="bi bi-check2-circle ms-2"></i>
+    </a>
   </div>
 
   {% else %}
-  <div class="alert alert-info text-center">
+  <div class="alert alert-info text-center fs-5">
     Seu carrinho está vazio.
   </div>
   {% endif %}
 </div>
+
+<!-- Script de confirmação -->
+<script>
+  // Confirmação ao remover
+  document.querySelectorAll('.remover-form').forEach(form => {
+    form.addEventListener('submit', function (e) {
+      if (!confirm('Tem certeza que deseja remover este item do carrinho?')) {
+        e.preventDefault();
+      }
+    });
+  });
+
+  // Confirmação ao finalizar compra
+  document.getElementById('finalizar-btn')?.addEventListener('click', function (e) {
+    if (!confirm('Deseja realmente finalizar a compra?')) {
+      e.preventDefault();
+    }
+  });
+</script>
 {% endblock %}

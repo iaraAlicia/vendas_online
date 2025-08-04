@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container mt-4">
     <h2>{% if produto %}Editar{% else %}Novo{% endif %} Produto</h2>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="mb-3">
             <label>Nome:</label>
@@ -20,6 +20,14 @@
             <label>Estoque:</label>
             <input type="number" name="estoque" class="form-control" value="{{ produto.estoque|default:'' }}" required>
         </div>
+        <div class="mb-3">
+            <label>Imagem:</label>
+            <input type="file" name="imagem" class="form-control">
+            {% if produto and produto.imagem %}
+                <img src="{{ produto.imagem.url }}" alt="Imagem do produto" class="img-thumbnail mt-2" width="200">
+            {% endif %}
+        </div>
+
         <button type="submit" class="btn btn-primary">Salvar</button>
         <a href="{% url 'produtos:lista' %}" class="btn btn-secondary">Cancelar</a>
     </form>

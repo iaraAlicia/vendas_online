@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from core.views import dashboard, redirecionar_usuario, index_publico
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -40,4 +42,4 @@ urlpatterns = [
     
     # Redirecionamento pós login
     path('login-redirect/', redirecionar_usuario, name='login_redirect'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

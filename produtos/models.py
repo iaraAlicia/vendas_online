@@ -7,6 +7,8 @@ class Produto(models.Model):
     descricao = models.TextField(blank=True)
     preco = models.DecimalField(max_digits=10, decimal_places=2)
     estoque = models.PositiveIntegerField()
+    imagem = models.ImageField(upload_to='produtos/', blank=True, null=True)  # NOVO
 
     def __str__(self):
         return self.nome
+

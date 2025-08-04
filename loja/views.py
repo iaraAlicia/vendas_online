@@ -80,3 +80,11 @@ def area_cliente(request):
         'cliente': cliente,
         'vendas': vendas
     })
+
+def remover_do_carrinho(request, produto_id):
+    carrinho = request.session.get('carrinho', {})
+    produto_id_str = str(produto_id)
+    if produto_id_str in carrinho:
+        del carrinho[produto_id_str]
+        request.session['carrinho'] = carrinho
+    return redirect('loja:carrinho')
