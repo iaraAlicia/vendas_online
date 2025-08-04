@@ -1,14 +1,27 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
-<div class="container mt-5" style="max-width: 400px;">
-  <h3 class="mb-4">Login</h3>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary w-100">Entrar</button>
-  </form>
-  <p class="mt-3 text-center">
-    Ainda não tem conta? <a href="{% url 'clientes:cadastro' %}">Cadastre-se</a>
-  </p>
+<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+  <div class="card shadow p-4" style="max-width: 400px; width: 100%;">
+    
+    <!-- Logo ou imagem acima do login -->
+    <div class="text-center mb-4">
+      <img src="{% static 'templates/img/loja_virtual.png' %}" alt="Logo da Loja" style="max-height: 100px;">
+    </div>
+
+    <h3 class="text-center mb-3">Login</h3>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary w-100">Entrar</button>
+    </form>
+
+    <p class="mt-3 text-center">
+      Ainda não tem conta? <a href="{% url 'clientes:cadastro' %}">Cadastre-se</a>
+    </p>
+  </div>
 </div>
 {% endblock %}
+

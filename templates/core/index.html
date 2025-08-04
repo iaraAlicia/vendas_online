@@ -1,9 +1,18 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
-<div class="container mt-4">
-  <h2>Bem-vindo à Loja Virtual!</h2>
-  <p>Faça login ou cadastre-se para acessar os recursos.</p>
-  <a href="{% url 'login' %}" class="btn btn-primary">Entrar</a>
-  <a href="{% url 'clientes:cadastro' %}" class="btn btn-outline-success">Cadastrar</a>
+<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+  <div class="card shadow p-4 text-center" style="max-width: 500px; width: 100%;">
+    
+    <!-- Imagem acima do texto -->
+    <img src="{% static 'templates/img/loja_virtual.png' %}" alt="Loja Virtual" class="img-fluid mb-4" style="max-height: 200px; object-fit: contain;">
+
+    <h2 class="mb-3">Bem-vindo à Loja Virtual!</h2>
+    <p class="mb-4">Faça login ou cadastre-se para acessar os recursos.</p>
+
+    <a href="{% url 'login' %}" class="btn btn-primary btn-block mb-2">Entrar</a>
+    <a href="{% url 'clientes:cadastro' %}" class="btn btn-outline-success btn-block">Cadastrar</a>
+  </div>
 </div>
 {% endblock %}
