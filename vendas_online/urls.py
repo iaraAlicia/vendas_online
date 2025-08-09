@@ -16,7 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from core.views import dashboard, redirecionar_usuario, index_publico
+from core.views import dashboard, redirecionar_usuario, index_publico, home_redirect
+from loja.views import nao_cliente
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -25,14 +26,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Página inicial pública (login inteligente: cliente/admin)
-    path('', index_publico, name='index'),
+    path('', home_redirect, name='index'),
 
     # Dashboard de administração (somente staff acessa)
     path('dashboard/', dashboard, name='dashboard'),
 
     # Login/Logout usando templates personalizados
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='loja:produtos'), name='logout'),
 
     # Apps
     path('produtos/', include('produtos.urls')),

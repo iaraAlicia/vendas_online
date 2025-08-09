@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container py-5">
+
+<form method="get" action="{% url 'loja:produtos' %}" class="mb-4 d-flex align-items-center gap-2">
+  <input type="text" name="q" value="{{ query }}" placeholder="Buscar produtos..." class="form-control">
+  <button type="submit" class="btn btn-primary">Pesquisar</button>
+  {% if query %}
+    <a href="{% url 'loja:produtos' %}" class="btn btn-secondary">Limpar</a>
+  {% endif %}
+</form>
+
+
   <h2 class="text-center mb-5 text-primary fw-bold">🛍️ Produtos Disponíveis</h2>
 
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
@@ -20,15 +30,21 @@
             <p class="mb-3"><span class="text-warning fw-semibold">📦 Estoque:</span> {{ p.estoque }}</p>
           </div>
 
-          <form method="post" action="{% url 'loja:adicionar' p.id %}" class="mt-auto">
-            {% csrf_token %}
-            <div class="input-group">
-              <input type="number" name="quantidade" value="1" min="1" max="{{ p.estoque }}" class="form-control rounded-start" required>
-              <button type="submit" class="btn btn-success rounded-end">
-                <i class="bi bi-cart-plus"></i> Adicionar
-              </button>
-            </div>
-          </form>
+          {% if user.is_authenticated %}
+            <form method="post" action="{% url 'loja:adicionar' p.id %}" class="mt-auto">
+              {% csrf_token %}
+              <div class="input-group">
+                <input type="number" name="quantidade" value="1" min="1" max="{{ p.estoque }}" class="form-control rounded-start" required>
+                <button type="submit" class="btn btn-success rounded-end">
+                  <i class="bi bi-cart-plus"></i> Adicionar
+                </button>
+              </div>
+            </form>
+          {% else %}
+            <a href="{% url 'login' %}?next={% url 'loja:produtos' %}" class="btn btn-outline-primary w-100 mt-auto">
+              <i class="bi bi-person-lock"></i> Faça login para comprar
+            </a>
+          {% endif %}
         </div>
       </div>
     </div>

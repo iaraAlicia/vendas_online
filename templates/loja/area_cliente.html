@@ -1,24 +1,41 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<div class="container mt-4">
-  <h2>Olá, {{ cliente.user.first_name }}!</h2>
-  <p>Bem-vinda à sua conta. Aqui estão seus pedidos recentes:</p>
+<div class="container mt-5">
+  <div class="card shadow-sm p-4 mb-4">
+    <h2 class="mb-3">Olá, <strong>{{ cliente.user.first_name }}</strong>! 👋</h2>
+    <p class="text-muted">Bem-vinda à sua conta. Aqui você pode acompanhar seus pedidos e continuar comprando.</p>
 
-  <a href="{% url 'loja:produtos' %}" class="btn btn-primary">Ver Produtos</a>
-  <a href="{% url 'loja:carrinho' %}" class="btn btn-outline-success">Meu Carrinho</a>
+    <div class="d-flex gap-3 mt-4 mb-3">
+      <a href="{% url 'loja:produtos' %}" class="btn btn-primary">
+        🛍️ Ver Produtos
+      </a>
+      <a href="{% url 'loja:carrinho' %}" class="btn btn-outline-success">
+        🛒 Meu Carrinho
+      </a>
+    </div>
+  </div>
 
-  <hr>
-  <h4>Histórico de Compras</h4>
-  {% if vendas %}
-    <ul class="list-group">
-      {% for venda in vendas %}
-        <li class="list-group-item">
-          {{ venda.data|date:"d/m/Y H:i" }} — Total: R$ {{ venda.total|floatformat:2 }}
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>Você ainda não realizou compras.</p>
-  {% endif %}
+  <div class="card shadow-sm p-4">
+    <h4 class="mb-3">📦 Histórico de Compras</h4>
+
+    {% if vendas %}
+      <ul class="list-group list-group-flush">
+        {% for venda in vendas %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>
+              <i class="bi bi-calendar-event"></i> 
+              {{ venda.data|date:"d/m/Y H:i" }}
+            </span>
+            <span class="fw-bold text-success">R$ {{ venda.total|floatformat:2 }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <div class="alert alert-info mb-0">
+        Você ainda não realizou compras. Que tal dar uma olhada nos produtos?
+      </div>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}

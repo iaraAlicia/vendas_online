@@ -1,34 +1,46 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container mt-4">
-    <h2>Histórico de Vendas</h2>
-    {% if vendas %}
-    <table class="table table-striped mt-3">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Cliente</th>
-                <th>Data</th>
-                <th>Total</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for venda in vendas %}
-            <tr>
-                <td>{{ venda.id }}</td>
-                <td>{{ venda.cliente.nome }}</td>
-                <td>{{ venda.data|date:"d/m/Y H:i" }}</td>
-                <td>R$ {{ venda.total|floatformat:2 }}</td>
-                <td>
-                    <a href="{% url 'vendas:comprovante' venda.id %}" class="btn btn-sm btn-info">Ver Comprovante</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <p>Nenhuma venda registrada ainda.</p>
-    {% endif %}
+<div class="container mt-5">
+    <div class="card shadow-sm rounded-4">
+        <div class="card-header bg-primary text-white rounded-top-4 d-flex align-items-center justify-content-between">
+            <h4 class="mb-0"><i class="bi bi-receipt-cutoff me-2"></i>Histórico de Vendas</h4>
+        </div>
+        <div class="card-body">
+            {% if vendas %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for venda in vendas %}
+                        <tr>
+                            <td>#{{ venda.id }}</td>
+                            <td>{{ venda.cliente.nome }}</td>
+                            <td>{{ venda.data|date:"d/m/Y H:i" }}</td>
+                            <td><strong>R$ {{ venda.total|floatformat:2 }}</strong></td>
+                            <td>
+                                <a href="{% url 'vendas:comprovante' venda.id %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-file-earmark-text me-1"></i> Comprovante
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="alert alert-info text-center mb-0 rounded-3" role="alert">
+                <i class="bi bi-info-circle-fill me-2"></i> Nenhuma venda registrada ainda.
+            </div>
+            {% endif %}
+        </div>
+    </div>
 </div>
 {% endblock %}

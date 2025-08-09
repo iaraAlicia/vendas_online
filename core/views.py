@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from clientes.models import Cliente
 from produtos.models import Produto
 from vendas.models import Venda, ItemVenda
+from loja.views import produtos 
 
 import calendar
 from django.db.models import Sum
@@ -25,6 +26,16 @@ def redirecionar_usuario(request):
     else:
         return redirect('loja:produtos')
 
+
+def home_redirect(request):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            return redirect('dashboard')
+        elif hasattr(request.user, 'cliente'):
+            return redirect('loja:area_cliente')
+        else:
+            return render(request, 'loja/nao_cliente.html')
+    return produtos(request)  # Mostra a vitrine de produtos para visitantes
 
 @staff_member_required
 def dashboard(request):
@@ -64,3 +75,7 @@ def dashboard(request):
     }
 
     return render(request, 'index.html', context)
+
+
+
+

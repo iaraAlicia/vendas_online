@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'loja',
 ]
 
-# Dizer explicitamente pra onde redirecionar após o login, depois do logout
+# Dizer explicitamente pra onde redirecionar após o login
 LOGIN_REDIRECT_URL = '/login-redirect/'
 
 # Isso aqui é útil para garantir que o Django saiba onde buscar os arquivos

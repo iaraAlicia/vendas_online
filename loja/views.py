@@ -6,8 +6,22 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
 def produtos(request):
-    lista = Produto.objects.filter(estoque__gt=0)
-    return render(request, 'loja/produtos.html', {'produtos': lista})
+    query = request.GET.get('q', '')  # pega o valor do campo de busca (GET)
+    if query:
+        lista = Produto.objects.filter(
+            Q(nome__icontains=query) | Q(descricao__icontains=query),
+            estoque__gt=0
+        )
+    else:
+        lista = Produto.objects.filter(estoque__gt=0)
+    
+    return render(request, 'loja/produtos.html', {
+        'produtos': lista,
+        'query': query,
+    })
+
+
+
 
 @require_POST
 def adicionar_ao_carrinho(request, produto_id):
@@ -68,7 +82,8 @@ def finalizar_compra(request):
     # Limpa o carrinho
     del request.session['carrinho']
     return render(request, 'loja/finalizado.html', {'venda': venda})
-@login_required
+
+
 def area_cliente(request):
     try:
         cliente = request.user.cliente
@@ -80,6 +95,9 @@ def area_cliente(request):
         'cliente': cliente,
         'vendas': vendas
     })
+    
+def nao_cliente(request):
+    return render(request, 'loja/produtos.html')
 
 def remover_do_carrinho(request, produto_id):
     carrinho = request.session.get('carrinho', {})
@@ -88,3 +106,21 @@ def remover_do_carrinho(request, produto_id):
         del carrinho[produto_id_str]
         request.session['carrinho'] = carrinho
     return redirect('loja:carrinho')
+
+
+from django.db.models import Q  # para buscas com "ou"
+
+def produtos(request):
+    query = request.GET.get('q', '')  # pega o valor do campo de busca (GET)
+    if query:
+        lista = Produto.objects.filter(
+            Q(nome__icontains=query) | Q(descricao__icontains=query),
+            estoque__gt=0
+        )
+    else:
+        lista = Produto.objects.filter(estoque__gt=0)
+    
+    return render(request, 'loja/produtos.html', {
+        'produtos': lista,
+        'query': query,  # envia a consulta de volta para o template
+    })
