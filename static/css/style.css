@@ -1,0 +1,89 @@
+/* ===== Top bar ===== */
+.top-bar {
+  background: #fff;
+  font-size: 0.9rem;
+  padding: 5px 15px;
+  border-bottom: 1px solid #eee;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1050; /* garante que fique acima da sidebar */
+}
+
+.top-bar a { color: #333; text-decoration: none; margin-left: 15px; }
+.top-bar a:hover { color: #f57c00; }
+
+/* ===== Navbar fixa ===== */
+.navbar-custom { background-color: #111; top:30px; }
+.logo-navbar { height: 40px; }
+
+/* Espaço pro conteúdo por causa da navbar fixa (aprox. 72px) */
+body { padding-top: 72px; }
+
+/* ===== Sidebar fixa ===== */
+
+.sidebar {
+    width: 250px;
+    background-color: #1f1f1f;
+    color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    position: fixed;
+    top: 100px; /* top-bar (50px) + navbar (70px) */
+    left: 0;
+    height: calc(100% - 100px);
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.sidebar::-webkit-scrollbar { width: 6px; }
+.sidebar::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
+
+.sidebar-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  text-transform: uppercase;
+  border-bottom: 2px solid #444;
+  padding-bottom: 8px;
+  letter-spacing: .5px;
+}
+.sidebar-menu { list-style: none; margin: 0; padding: 0; }
+.sidebar-menu li { margin: 10px 0; }
+.sidebar-menu li a {
+  display: flex; align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #ddd;
+  font-size: 15px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  transition: all .25s ease;
+}
+.sidebar-menu li a i { color: #ffcc00; min-width: 18px; text-align: center; }
+.sidebar-menu li a:hover { background: #333; color: #fff; transform: translateX(4px); }
+
+/* ===== Conteúdo principal (empurrado) ===== */
+.main-content { margin-left: 270px; }
+
+/* ===== Footer ===== */
+footer {
+  background: #111;
+  color: #fff;
+  padding: 30px 20px;
+  margin-top: 40px;
+  z-index: 1001;
+  width: 100%;
+  position: absolute;
+}
+footer a { color: #f57c00; text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+.logo-footer { height: 40px; }
+
+/* ===== Responsivo ===== */
+@media (max-width: 991px) {
+  .sidebar { display: none; }
+  .main-content { margin-left: 0; }
+}

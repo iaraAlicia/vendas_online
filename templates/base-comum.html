@@ -5,22 +5,19 @@
   <meta charset="UTF-8">
   <title>{% block title %}Loja Online{% endblock %}</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style-comum.css' %}">
   <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png">
-  <!-- Ícones (se usar ícones na sidebar) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body class="has-sidebar"><!-- classe indica que esta página usa sidebar -->
+<body>
 
-<!-- Top Bar (rolável, não fixa) -->
+<!-- Top Bar -->
 <div class="top-bar">
-  <div class="container d-flex justify-content-between">
-    <div>
-      <span>📍 456 Creative District Ahmad Yani, Medan, North Sumatera</span>
-      <span>✉ <a href="mailto:hola@dominantsite.com">hola@dominantsite.com</a></span>
-      <span>📞 <a href="tel:+80033744676">+800-3374-4676</a></span>
+  <div class="container d-flex justify-content-between align-items-center">
+    <div class="small">
+      📍 456 Creative District Ahmad Yani | ✉ <a href="mailto:hola@dominantsite.com">hola@dominantsite.com</a> | 📞 <a href="tel:+80033744676">+800-3374-4676</a>
     </div>
-    <div>
+    <div class="social-icons">
       <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
       <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
       <a href="#"><i class="fa-brands fa-youtube"></i></a>
@@ -28,8 +25,8 @@
   </div>
 </div>
 
-<!-- Navbar FIXA -->
-<nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
   <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="{% url 'loja:produtos' %}">
       <img src="{% static 'img/logo.png' %}" class="logo-navbar me-2" alt="Casa & Obra">
@@ -48,34 +45,22 @@
             <li class="nav-item"><a class="nav-link" href="{% url 'produtos:index' %}">Produtos</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'clientes:index' %}">Clientes</a></li>
           {% else %}
-            <!-- Dropdown Loja -->
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Loja
-              </a>
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Loja</a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'loja:produtos' %}">Todos os Produtos</a></li>
                 <li><a class="dropdown-item" href="#">Novidades</a></li>
                 <li><a class="dropdown-item" href="#">Promoções</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Mais Vendidos</a></li>
               </ul>
             </li>
-
-            <!-- Dropdown Categorias -->
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Categorias
-              </a>
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Categorias</a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">Roupas</a></li>
                 <li><a class="dropdown-item" href="#">Acessórios</a></li>
                 <li><a class="dropdown-item" href="#">Eletrônicos</a></li>
-                <li><a class="dropdown-item" href="#">Casa & Decoração</a></li>
               </ul>
             </li>
-
-            <!-- Links básicos -->
             <li class="nav-item"><a class="nav-link" href="{% url 'loja:carrinho' %}">Carrinho</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'loja:area_cliente' %}">Minha Conta</a></li>
           {% endif %}
@@ -96,28 +81,15 @@
   </div>
 </nav>
 
-<!-- SIDEBAR FIXA (fora do grid) -->
-<aside class="sidebar">
-  <h2 class="sidebar-title">Categorias</h2>
-  <ul class="sidebar-menu">
-    <li><a href="#"><i class="fa-solid fa-mobile-screen-button"></i> Eletrônicos</a></li>
-    <li><a href="#"><i class="fa-solid fa-shirt"></i> Moda</a></li>
-    <li><a href="#"><i class="fa-solid fa-couch"></i> Casa & Decoração</a></li>
-    <li><a href="#"><i class="fa-solid fa-book"></i> Livros</a></li>
-    <li><a href="#"><i class="fa-solid fa-futbol"></i> Esportes</a></li>
-    <li><a href="#"><i class="fa-solid fa-gift"></i> Presentes</a></li>
-  </ul>
-</aside>
-
-<!-- CONTEÚDO: use esta wrapper -->
+<!-- Conteúdo -->
 <main class="main-content">
   <div class="container">
     {% block content %}{% endblock %}
   </div>
 </main>
 
-<!-- Rodapé -->
-<footer>
+<!-- Footer -->
+<footer class="fixed-bottom">
   <div class="container">
     <div class="row">
       <div class="col-md-4 d-flex align-items-center">
@@ -129,8 +101,7 @@
         <ul class="list-unstyled">
           <li><a href="{% url 'loja:produtos' %}">Produtos</a></li>
           <li><a href="{% url 'loja:carrinho' %}">Carrinho</a></li>
-          <li><a href="">Contato</a></li>
-          <li><a href="#">Política de Privacidade</a></li>
+          <li><a href="#">Contato</a></li>
         </ul>
       </div>
       <div class="col-md-4">
