@@ -21,7 +21,7 @@ def novo_produto(request):
             descricao=descricao,
             preco=preco,
             estoque=estoque,
-            imagem=imagem  # NOVO
+            imagem=imagem
         )
         return redirect('produtos:lista')
     return render(request, 'produtos/formulario.html')
@@ -34,7 +34,7 @@ def editar_produto(request, id):
         produto.descricao = request.POST['descricao']
         produto.preco = request.POST['preco']
         produto.estoque = request.POST['estoque']
-        if 'imagem' in request.FILES:  # NOVO
+        if 'imagem' in request.FILES:
             produto.imagem = request.FILES['imagem']
         produto.save()
         return redirect('produtos:lista')

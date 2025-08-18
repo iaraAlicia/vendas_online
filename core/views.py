@@ -12,14 +12,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponseForbidden
 
-def index_publico(request):
-    if request.user.is_authenticated:
-        if request.user.is_staff:
-            return redirect('dashboard')  # ou para onde estiver seu dashboard
-        else:
-            return redirect('loja:produtos')
-    return render(request, 'core/index.html')
-
 def redirecionar_usuario(request):
     if request.user.is_staff:
         return redirect('dashboard')

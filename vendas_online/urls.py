@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from core.views import dashboard, redirecionar_usuario, index_publico, home_redirect
+from core.views import dashboard, redirecionar_usuario, home_redirect
 from loja.views import nao_cliente
 from django.contrib.auth import views as auth_views
 from django.conf import settings
