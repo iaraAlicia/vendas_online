@@ -31,7 +31,8 @@
 <!-- Navbar FIXA -->
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
   <div class="container">
-    <a class="navbar-brand d-flex align-items-center" href="{% url 'loja:produtos' %}">
+    <a class="navbar-brand d-flex align-items-center" 
+      href="{% if user.is_authenticated and user.is_staff %}{% url 'dashboard' %}{% else %}{% url 'loja:produtos' %}{% endif %}">
       <img src="{% static 'img/logo.png' %}" class="logo-navbar me-2" alt="Casa & Obra">
       <span class="text-warning">Casa & Obra</span>
     </a>
@@ -100,12 +101,12 @@
 <aside class="sidebar">
   <h2 class="sidebar-title">Categorias</h2>
   <ul class="sidebar-menu">
-    <li><a href="#"><i class="fa-solid fa-mobile-screen-button"></i> Eletrônicos</a></li>
-    <li><a href="#"><i class="fa-solid fa-shirt"></i> Moda</a></li>
-    <li><a href="#"><i class="fa-solid fa-couch"></i> Casa & Decoração</a></li>
-    <li><a href="#"><i class="fa-solid fa-book"></i> Livros</a></li>
-    <li><a href="#"><i class="fa-solid fa-futbol"></i> Esportes</a></li>
-    <li><a href="#"><i class="fa-solid fa-gift"></i> Presentes</a></li>
+    <li><a href="#"><i class="fa-solid fa-hammer"></i> Ferramentas</a></li>
+    <li><a href="#"><i class="fa-solid fa-paint-roller"></i> Pintura</a></li>
+    <li><a href="#"><i class="fa-solid fa-ruler-combined"></i> Construção</a></li>
+    <li><a href="#"><i class="fa-solid fa-lightbulb"></i> Elétrica</a></li>
+    <li><a href="#"><i class="fa-solid fa-screwdriver-wrench"></i> Hidráulica</a></li>
+    <li><a href="#"><i class="fa-solid fa-door-closed"></i> Marcenaria</a></li>
   </ul>
 </aside>
 
