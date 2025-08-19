@@ -31,8 +31,7 @@
 <!-- Navbar FIXA -->
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
   <div class="container">
-    <a class="navbar-brand d-flex align-items-center" 
-      href="{% if user.is_authenticated and user.is_staff %}{% url 'dashboard' %}{% else %}{% url 'loja:produtos' %}{% endif %}">
+    <a class="navbar-brand d-flex align-items-center" href="{% url 'loja:produtos' %}">
       <img src="{% static 'img/logo.png' %}" class="logo-navbar me-2" alt="Casa & Obra">
       <span class="text-warning">Casa & Obra</span>
     </a>
